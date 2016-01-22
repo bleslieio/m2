@@ -1,0 +1,92 @@
+========================================
+>>>>>>>>>>>>>>MAGENTO 2<<<<<<<<<<<<<<<<<
+========================================
+	Installation
+	-------------
+		git clone https://github.com/ryanstreet/magento2-vagrant.git m2/
+			(includes some extra stuff for development mode)
+		git submodule init
+		git submodule update
+
+		vagrant up
+		composer install
+			(packagist)
+
+		gui install
+
+		php bin/magento
+			CLI tool like magerun
+
+			setup:static-content:deploy
+				run for the first time to initialize the admin panel. No static content in developer mode
+
+
+	Working With M2
+	----------------
+		core -> lib/Magento/Framework
+
+
+		Creating a module
+		------------------
+		registration.php
+			can copy from elsewhere, just need to make sure the module name is correct
+
+		etc/module.xml
+
+
+		php bin/magento module:enable Interactone_Sample
+		php bin/magento setup:upgrade4
+
+
+		event observers
+			events.xml
+				frontend / admin
+			execute method rather than module declaration (like controllers)
+
+		plugins
+			override core methods
+			before, after, "around"
+				around 
+					gives you the method to call so you can do stuff before & after without having to use 2 plugins
+					multiple people can alter the same method without conflicts
+
+		preference
+			fundamentally override functionality of a class
+			not just overriding one method
+
+		service contract
+			no matter what, the methods will always be the same in m2
+			ensures stability
+			if you're altering something w/ a service contract, you must uphold that service contract
+
+		create a new controller
+			create a route
+				routes.xml
+				creates front name
+					first part of the URL
+			create a class
+
+			URL structure
+				frontName/Folder/Controller
+
+			namespace 	= path to the controller file
+			class 		= controller file name
+			extends 	= framework class it should extend
+
+
+			can use 'use' then action path.. extends the file name
+				if there are conflicts, can 'use path as alias' then extends alias
+
+
+		create plugin
+			di.xml
+				type name 	= class you want to intercept
+				plugin name = unique name
+				type 		= new class
+
+			model/plugin/hello.php
+				namespace
+				class
+
+			*plugins are always models
+			
